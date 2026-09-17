@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 from mockData import products
 
 app = FastAPI()
@@ -16,6 +16,7 @@ def get_products():
     return products
 
 
+#####Passing data from client to server using path and query params
 
 ## Path Params..
 @app.get("/products/{product_id}")
@@ -27,3 +28,10 @@ def get_one_product(product_id: int):
             return {"message": "Product not found!"}
 
 
+## Query Params..
+@app.get("/greet")
+def greet_user(request:Request):         ##request for n number of data from client to server using query params
+    query_params = request.query_params
+    name = query_params.get("name")
+    age = query_params.get("age")
+    return f"Hello, {name}! You are {age} years old."
